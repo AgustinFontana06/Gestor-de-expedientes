@@ -9,7 +9,8 @@ public class Usuario: Entidad
     public DireccionEmail Email {get; private set;}= new DireccionEmail("vacio","vacio.com");
     public String ContrasenaHash {get; private set;}="";
     public bool EsAdministrador {get; private set;} = false; // por defecto no es administrador.
-    public List <Permiso> ListaDePermisos {get; private set;}=[];
+    private List <Permiso> lista =[];
+    public IReadOnlyCollection<Permiso> ListaDePermisos => lista; //creamos una lista readonly que contenga todo lo de la lista privada
 
 
     public Usuario(String nombre, DireccionEmail email,String HashedPassword)
@@ -28,20 +29,20 @@ public class Usuario: Entidad
           Email= email;
           ContrasenaHash=HashedPassword;
           EsAdministrador = false;
-          ListaDePermisos = [] ;
+          lista = [] ;
     }
 
      public void AgregarPermiso(Permiso permiso)
      {
-          if (!ListaDePermisos.Contains(permiso))
+          if (!lista.Contains(permiso))
           {
-               ListaDePermisos.Add(permiso);
+               lista.Add(permiso);
           }
      }
 
      public void EliminarPermiso(Permiso permiso)
      {
-          ListaDePermisos.Remove(permiso);
+          lista.Remove(permiso);
      }
 
      public void ModificarDatos(string nombre, DireccionEmail email, string contrasenaHash)

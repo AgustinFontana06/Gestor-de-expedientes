@@ -1,12 +1,10 @@
 using SGE.Aplicacion.Abstracciones;
 using SGE.Aplicacion.Excepciones;
 using SGE.Dominio.Usuarios;
-using System.Security.Cryptography;
-using System.Text;
 
 
 namespace SGE.Aplicacion.Usuarios.Modificar;
-public class ModificarMisDatosUseCase(IUsuarioRepository usuarioRepository, IUnidadDeTrabajo udt)
+public class ModificarMisDatosUseCase(IUsuarioRepository usuarioRepository, IUnidadDeTrabajo udt, IHashService hashService)
 {
     public ModificarMisDatosResponse Ejecutar(ModificarMisDatosRequest request, Guid usuarioAutenticadoId)
     {
@@ -16,7 +14,7 @@ public class ModificarMisDatosUseCase(IUsuarioRepository usuarioRepository, IUni
             throw new EntidadNoEncontradaException("Usuario no encontrado");
         }
 
-        usuario.ModificarDatos(request.nombre, DireccionEmail.Parse(request.email), Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(request.contraseña))));
+        usuario.ModificarDatos(request.nombre, DireccionEmail.Parse(request.email), hashService.Hash(request.contraseña));
 
         usuarioRepository.Modificar(usuario);
         udt.Guardar();

@@ -37,9 +37,10 @@ public class SgeContext : DbContext
         modelBuilder.Entity<Tramite>().HasOne<Expediente>().WithMany().HasForeignKey(t => t.ExpedienteId).OnDelete(DeleteBehavior.Cascade);
     
         //convertir el enumerativo de permisos en json para sqlite y viceversa
-        modelBuilder.Entity<Usuario>().Property(u => u.ListaDePermisos).HasConversion(
+        modelBuilder.Entity<Usuario>().Property<List<Permiso>>("lista").HasConversion(
             v => JsonSerializer.Serialize(v, (JsonSerializerOptions?) null),
             v => JsonSerializer.Deserialize<List<Permiso>>(v, (JsonSerializerOptions?)null) ?? new List<Permiso>()
-        );
+        )
+        .HasColumnName("ListaDePermisos");
     }
 }

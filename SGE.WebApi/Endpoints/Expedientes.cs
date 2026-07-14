@@ -2,7 +2,8 @@ using SGE.Aplicacion.Expedientes.Agregar;
 using SGE.Aplicacion.Expedientes.ObtenerTodos;
 using SGE.Aplicacion.Expedientes.Eliminar;
 using SGE.Aplicacion.Expedientes.Modificar;
-using SGE.Dominio.Expedientes;
+using SGE.Aplicacion.Expedientes.ObtenerPorId;
+using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace SGE.WebApi.Endpoints;
@@ -14,11 +15,18 @@ public static class ExpedientesEndpoints
         var grupo = app.MapGroup("/expedientes").WithTags("Expedientes");
 
         // ----    METODOS GET ----
-        grupo.MapGet("/obtener-todos", (ObtenerTodosUseCase useCase) =>
+        grupo.MapGet("/obtener-todos", ([FromServices]ObtenerTodosUseCase useCase) =>
         {
             var resultado = useCase.Ejecutar(new ObtenerTodosRequest());
             return Results.Ok(resultado);
         });
+
+        grupo.MapGet("/obtener-por-id/{id:guid}", (Guid id, [FromServices] SGE.Aplicacion.Expedientes.ObtenerPorId.ObtenerPorIdUseCase useCase) =>
+        {
+            var request = new ObtenerPorIdRequest(id); 
+            var resultado = useCase.Ejecutar(request);
+            return Results.Ok(resultado);
+        }).WithName("ObtenerExpedientePorId");
 
         //---- METODOS POST ----
         grupo.MapPost("/agregar-expediente", (AgregarExpedienteRequest request, ClaimsPrincipal user, AgregarExpedienteUseCase useCase) =>

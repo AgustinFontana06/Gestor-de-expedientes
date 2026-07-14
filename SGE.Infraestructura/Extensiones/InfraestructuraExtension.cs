@@ -8,6 +8,7 @@ using SGE.Infraestructura.Expedientes;
 using SGE.Infraestructura.Autorizaciones;
 using SGE.Infraestructura.Usuarios;
 using SGE.Infraestructura.UDT;
+using SGE.Infraestructura.ServicioHash;
 
 namespace SGE.Infraestructura.Extensiones;
 
@@ -25,6 +26,7 @@ public static class InfreaestructuraExtension
         services.AddScoped<ITramiteRepository, TramiteRepository>();
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
         services.AddScoped<IAutorizacionService, AutorizacionService>();
+        services.AddScoped<IHashService, HashService>();
 
         return services;
     }

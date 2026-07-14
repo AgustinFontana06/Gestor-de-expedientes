@@ -31,6 +31,7 @@ public static class AplicacionExtension
         services.AddScoped<ModificarCaratulaExpedienteUseCase>();
         services.AddScoped<CambiarEstadoUseCase>();
         services.AddScoped<ObtenerTodosUseCase>();
+        services.AddScoped<SGE.Aplicacion.Expedientes.ObtenerPorId.ObtenerPorIdUseCase>();
 
         //tramites
         services.AddScoped<AgregarTramiteUseCase>();

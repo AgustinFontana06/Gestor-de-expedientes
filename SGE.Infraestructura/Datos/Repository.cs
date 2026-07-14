@@ -1,5 +1,5 @@
 using SGE.Aplicacion.Abstracciones;
-using SGE.Infraestructura;
+using SGE.Aplicacion.Excepciones;
 using SGE.Dominio.Abstracciones;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,10 +29,11 @@ public abstract class Repository<T> : IRepository<T> where T : Entidad
     public virtual void Eliminar(Guid id)
     {
         var entidad = ObtenerPorId(id);
-        if (entidad != null)
+        if(entidad == null)
         {
-            _dbSet.Remove(entidad);
+            throw new EntidadNoEncontradaException("la entidad no existe");
         }
+        _dbSet.Remove(entidad);
     }
 
     public virtual T? ObtenerPorId(Guid id)

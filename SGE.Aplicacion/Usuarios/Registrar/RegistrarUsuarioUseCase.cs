@@ -3,10 +3,8 @@ namespace SGE.Aplicacion.Usuarios.Registrar;
 using SGE.Aplicacion.Abstracciones;
 using SGE.Aplicacion.Excepciones;
 using SGE.Dominio.Usuarios;
-using System.Security.Cryptography;
-using System.Text;
 
-public class RegistrarUsuarioUseCase(IUnidadDeTrabajo udt, IUsuarioRepository usuarioRepository)
+public class RegistrarUsuarioUseCase(IUnidadDeTrabajo udt, IUsuarioRepository usuarioRepository, IHashService hashService)
 {
     public RegistrarUsuarioResponse Ejecutar(RegistrarUsuarioRequest request)
     {
@@ -17,7 +15,7 @@ public class RegistrarUsuarioUseCase(IUnidadDeTrabajo udt, IUsuarioRepository us
         }
 
         //2.Crear el usuario
-        var hash = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(request.password)));
+        var hash = hashService.Hash(request.password);
         var usuario = new Usuario(request.nombre, DireccionEmail.Parse(request.email), hash);
         usuarioRepository.AgregarUsuario(usuario);
         udt.Guardar();

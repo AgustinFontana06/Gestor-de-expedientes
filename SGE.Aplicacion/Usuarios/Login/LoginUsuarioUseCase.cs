@@ -1,12 +1,10 @@
-using System.Security.Cryptography;
-using System.Text;
 using SGE.Aplicacion.Abstracciones;
 using SGE.Aplicacion.Excepciones;
 using SGE.Dominio.Usuarios;
 using SGE.Dominio.Excepciones;
 namespace SGE.Aplicacion.Usuarios.Login;
 
-public class LoginUsuarioUseCase(IUnidadDeTrabajo unidadDeTrabajo, IUsuarioRepository usuarioRepository,ITokenProvider tokenProvider)
+public class LoginUsuarioUseCase(IUsuarioRepository usuarioRepository,ITokenProvider tokenProvider, IHashService hashService)
 {
     public LoginUsuarioResponse Ejecutar( LoginUsuarioRequest request)
     {
@@ -27,19 +25,13 @@ public class LoginUsuarioUseCase(IUnidadDeTrabajo unidadDeTrabajo, IUsuarioRepos
             throw new EntidadNoEncontradaException("El usuario con el que se esta queriendo loguear no existe.");
         }
 
-        //hashing
-        var bytes = Encoding.UTF8.GetBytes(request.password);
-        var hashBytes = SHA256.HashData(bytes);
-        var passwordRequestHash = Convert.ToHexString(hashBytes); // o Convert.ToBase64String(hashBytes) dependiendo de cómo lo guardes
-
         // Asumiendo que usuarioBuscado tiene una propiedad Password donde se almacena el hash
-        if(usuarioBuscado.ContrasenaHash != passwordRequestHash)
+        if(usuarioBuscado.ContrasenaHash != hashService.Hash(request.password))
         {
            throw new AutorizacionException($"las credenciales utilizadas para el email {request.email} no son validas.");
         }
         // 4. Delegamos la creación del token a la infraestructura
         var token = tokenProvider.GenerarToken(usuarioBuscado);
-        unidadDeTrabajo.Guardar();
         return new LoginUsuarioResponse(token);
     }
 }

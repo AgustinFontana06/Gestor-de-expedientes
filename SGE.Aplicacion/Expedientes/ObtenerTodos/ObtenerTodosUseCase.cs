@@ -11,7 +11,7 @@ public class ObtenerTodosUseCase(IExpedienteRepository repositorio)
         IEnumerable<Expediente> expedientes = repositorio.ObtenerTodos();
 
         //por cada Expediente encontrado, crea un Dto de respuesta
-        var respuesta = expedientes.Select(e => new ObtenerPorIdResponse(
+        var respuesta = expedientes.Select(e => new ExpedienteResumen(
             e.Id,
             e.Caratula.Texto,
             e.Estado,

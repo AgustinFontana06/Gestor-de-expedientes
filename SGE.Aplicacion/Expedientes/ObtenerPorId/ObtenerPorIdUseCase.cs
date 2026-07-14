@@ -4,16 +4,17 @@ using SGE.Aplicacion.Expedientes;
 using SGE.Aplicacion.Excepciones;
 using SGE.Aplicacion.Abstracciones;
 
-public class ObtenerPorIdUseCase(IExpedienteRepository repositorio)
+public class ObtenerPorIdUseCase(IExpedienteRepository repositorioExpediente, ITramiteRepository repositorioTramite)
 {
     public ObtenerPorIdResponse Ejecutar(ObtenerPorIdRequest request)
     {
 
-        Expediente? expediente = repositorio.ObtenerPorId(request.ExpedienteId);
+        Expediente? expediente = repositorioExpediente.ObtenerPorId(request.ExpedienteId);
 
         if (expediente == null)
             throw new EntidadNoEncontradaException($"No se encontro un expediente con id {request.ExpedienteId}");
 
+        var tramites = repositorioTramite.ObtenerPorExpedienteId(request.ExpedienteId);
 
         return new ObtenerPorIdResponse(
             expediente.Id,
@@ -21,7 +22,8 @@ public class ObtenerPorIdUseCase(IExpedienteRepository repositorio)
             expediente.Estado,
             expediente.FechaCreacion,
             expediente.FechaUltimaModificacion,
-            expediente.UsuarioUltimoCambio
+            expediente.UsuarioUltimoCambio,
+            tramites
         );
     }
 }
