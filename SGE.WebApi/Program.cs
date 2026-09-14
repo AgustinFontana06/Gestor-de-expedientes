@@ -14,6 +14,15 @@ using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//se agrega CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirReact", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173", "http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
 builder.Services.ConfigureHttpJsonOptions(options =>
@@ -47,7 +56,7 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-
+app.UseCors("PermitirReact");
 
 app.UseExceptionHandler();
 

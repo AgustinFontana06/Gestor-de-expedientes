@@ -1,0 +1,34 @@
+table {
+    width: 90%;
+    margin: 30px auto;
+    border-collapse: collapse;
+}
+
+th, td{
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: left;
+}
+
+th{
+    font-weight: bold;
+}
+
+tr{
+    height: 45ph;
+}
+
+.agregar-expediente{
+    width: 150px;
+    margin-top: 10px;  
+}
+
+.inputs h2{
+    margin-top: 8px;
+}
+
+.input{
+    width: 100%;
+    max-width: 400px;
+    margin-top: 4px;
+}

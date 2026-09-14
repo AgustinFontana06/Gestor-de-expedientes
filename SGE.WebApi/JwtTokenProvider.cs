@@ -12,6 +12,8 @@ public class JwtTokenProvider(IConfiguration config) : ITokenProvider
     // Guardamos únicamente el ID del usuario para identificarlo
         var claims = new[] {
         new Claim("ID", usuario.Id.ToString()),
+        new Claim("esAdministrador", usuario.EsAdministrador.ToString()),
+        new Claim("nombre", usuario.Nombre)
         };
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"]!));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);// Es similar a un DTO, pero hace

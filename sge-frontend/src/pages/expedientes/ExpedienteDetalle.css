@@ -1,0 +1,95 @@
+.expediente-detalle {
+    padding: 40px;
+}
+
+.expediente-detalle h1{
+    padding-bottom: 50px
+}
+
+.detalle-superior {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 60px;
+    margin-bottom: 60px;
+    width: 100%;
+}
+
+.container-expediente {
+    flex: 1;
+    min-width: 0;
+}
+
+.container-expediente p {
+    margin: 20px 0;
+}
+
+.estado-expediente {
+    flex: 1;
+    min-width: 0;
+    padding: 20px;
+}
+
+.estado-expediente h2 {
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.timeline {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.timeline-item {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    align-items: center;
+}
+
+.timeline-item span {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.timeline-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: #bdbdbd;
+    border: 3px solid #bdbdbd;
+}
+
+.timeline-item.activo .timeline-dot{
+    background-color: #2eec71;
+    border-color: #2eec71;
+}
+
+.timeline-line {
+    flex: 1;
+    height: 4px;
+    margin-top: 8px;
+    min-width: 20px;
+    background-color: #bdbdbd
+}
+
+.timeline-line.linea-activa{
+    background-color: #2eec71;
+}
+
+.acciones-expediente {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 70px;
+}
+
+.tramites-container {
+    margin-top: 40px;
+}
+
+.tramites-container h2 {
+    margin-bottom: 30px;
+}
+

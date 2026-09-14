@@ -24,7 +24,7 @@ public static class AplicacionExtension
 {
     public static IServiceCollection AddAplicacion(this IServiceCollection services, IConfiguration configuration)
     {  
-        //se crea una sola instancia por peticion, es decir se reutiliza cada scoped por use case requerido
+        //se crea una sola instancia por peticion
         //expedientes
         services.AddScoped<AgregarExpedienteUseCase>();
         services.AddScoped<EliminarExpedienteUseCase>();

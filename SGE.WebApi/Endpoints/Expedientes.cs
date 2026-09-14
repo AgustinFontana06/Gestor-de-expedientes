@@ -21,7 +21,7 @@ public static class ExpedientesEndpoints
             return Results.Ok(resultado);
         });
 
-        grupo.MapGet("/obtener-por-id/{id:guid}", (Guid id, [FromServices] SGE.Aplicacion.Expedientes.ObtenerPorId.ObtenerPorIdUseCase useCase) =>
+        grupo.MapGet("/obtener-por-id/{id}", (Guid id, [FromServices] SGE.Aplicacion.Expedientes.ObtenerPorId.ObtenerPorIdUseCase useCase) =>
         {
             var request = new ObtenerPorIdRequest(id); 
             var resultado = useCase.Ejecutar(request);
